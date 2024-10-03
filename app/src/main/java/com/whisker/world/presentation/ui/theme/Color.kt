@@ -1,4 +1,4 @@
-package com.whisker.world.ui.theme
+package com.whisker.world.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

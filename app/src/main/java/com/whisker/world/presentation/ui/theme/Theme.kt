@@ -1,4 +1,4 @@
-package com.whisker.world.ui.theme
+package com.whisker.world.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

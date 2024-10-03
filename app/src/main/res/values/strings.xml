@@ -1,3 +1,10 @@
 <resources>
+
     <string name="app_name">WhiskerWorld</string>
+
+    <!--Main Screen-->
+    <string name="bottom_navigation_list">Cats List</string>
+    <string name="bottom_navigation_favourites">Favourites</string>
+    <string name="breed_item_favourites_content_description">Add to Favourites</string>
+
 </resources>

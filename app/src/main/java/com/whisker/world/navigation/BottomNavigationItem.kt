@@ -1,0 +1,33 @@
+package com.whisker.world.navigation
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import com.whisker.world.R
+
+data class BottomNavigationItem(
+    val title: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector
+)
+
+@Composable
+fun getBottomNavigationItems() =
+    listOf(
+        BottomNavigationItem(
+            title = stringResource(R.string.bottom_navigation_list),
+            selectedIcon = Icons.Filled.Menu,
+            unselectedIcon = Icons.Outlined.Menu
+
+        ),
+        BottomNavigationItem(
+            title = stringResource(R.string.bottom_navigation_favourites),
+            selectedIcon = Icons.Filled.Star,
+            unselectedIcon = Icons.Outlined.Star
+        )
+    )
