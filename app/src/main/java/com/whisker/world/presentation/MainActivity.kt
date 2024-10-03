@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.whisker.world.presentation.home.HomeScreen
+import com.whisker.world.navigation.NavHost
 import com.whisker.world.presentation.home.HomeViewModel
 import com.whisker.world.presentation.ui.theme.WhiskerWorldTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             WhiskerWorldTheme {
-                HomeScreen(state = viewModel.state.collectAsState().value) { }
+                NavHost(viewModel.state.collectAsState().value)
             }
         }
     }

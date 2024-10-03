@@ -64,7 +64,6 @@ dependencies {
     implementation(libs.retrofit2)
     implementation(libs.retrofit2.converter)
 
-
     // Hilt - Dagger
     implementation(libs.android.hilt)
     kapt(libs.compiler.hilt)
@@ -75,6 +74,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.navigation.compose)
 
     // Coil
     implementation(libs.coil.compose)
