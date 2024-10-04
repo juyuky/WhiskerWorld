@@ -6,4 +6,6 @@ interface BreedRepository {
 
     fun getAllBreeds(): Result<List<Breed>>
 
+    fun getBreedByImageId(imageId: String): Result<Breed>
+
 }

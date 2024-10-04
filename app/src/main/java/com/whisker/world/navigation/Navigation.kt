@@ -1,13 +1,19 @@
 package com.whisker.world.navigation
 
-private const val HOME = "home"
-private const val FAVOURITES = "favourites"
-private const val DETAILS = "details"
+object NavigationArgs {
+    const val BREED_ID = "BREED_ID"
 
-sealed class Navigation(val destination: String) {
-    object Home : Navigation(HOME)
-    object Favourites : Navigation(FAVOURITES)
-    object Details : Navigation(DETAILS)
+    fun toPath(param: String) = "{${param}}"
 }
 
-sealed class Route(val value: String)
+object Routes {
+    const val HOME = "home"
+    const val FAVOURITES = "favourites"
+    const val DETAILS = "details/{${NavigationArgs.BREED_ID}}"
+}
+
+sealed class Navigation(val destination: String) {
+    object Home : Navigation(Routes.HOME)
+    object Favourites : Navigation(Routes.FAVOURITES)
+    object Details : Navigation(Routes.DETAILS)
+}

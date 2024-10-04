@@ -2,9 +2,15 @@
 
     <string name="app_name">WhiskerWorld</string>
 
-    <!--Main Screen-->
+    <!--Home Screen-->
     <string name="bottom_navigation_list">Cats List</string>
     <string name="bottom_navigation_favourites">Favourites</string>
     <string name="breed_item_favourites_content_description">Add to Favourites</string>
+    <string name="home_screen_top_bar_title">Cats</string>
+
+    <!--Details Screen-->
+    <string name="details_screen_top_bar_title">Cat Details</string>
+    <string name="details_screen_origin_title">Origin</string>
+    <string name="details_screen_temperament_title">Temperament</string>
 
 </resources>

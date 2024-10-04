@@ -1,7 +1,13 @@
 package com.whisker.world.presentation.home
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -20,11 +26,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.whisker.world.R
 import com.whisker.world.navigation.getBottomNavigationItems
 import com.whisker.world.presentation.component.BreedItem
+import com.whisker.world.presentation.component.CustomTopBar
 import com.whisker.world.presentation.ui.theme.WhiskerWorldTheme
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     state: HomeState,
@@ -35,19 +42,24 @@ fun HomeScreen(
         color = MaterialTheme.colorScheme.background
     ) {
         Scaffold(
+            topBar = {
+                CustomTopBar(R.string.home_screen_top_bar_title)
+            },
+            content = { innerPadding ->
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(120.dp),
+                    content = {
+                        items(state.breedUiList) { breedUi ->
+                            BreedItem(breedUi, onEvent)
+                        }
+                    },
+                    modifier = Modifier.padding(innerPadding)
+                )
+            },
             bottomBar = {
                 GetNavigationBar(onEvent)
             }
-        ) {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(120.dp),
-                content = {
-                    items(state.breedUiList) { breedUi ->
-                        BreedItem(breedUi)
-                    }
-                }
-            )
-        }
+        )
     }
 }
 
@@ -63,7 +75,7 @@ fun GetNavigationBar(onEvent: (HomeEvent) -> Unit) {
                 selected = selectedBarItemIndex == index,
                 onClick = {
                     selectedBarItemIndex = index
-                    onEvent(HomeEvent.onNavigationBarItemClicked)
+                    onEvent(HomeEvent.OnNavigationBarItemClicked)
                 },
                 label = {
                     Text(text = item.title)
