@@ -1,7 +1,9 @@
 package com.whisker.world.di
 
 import com.whisker.world.domain.repository.BreedRepository
+import com.whisker.world.domain.repository.ImageRepository
 import com.whisker.world.domain.usecase.GetBreedByIdUseCase
+import com.whisker.world.domain.usecase.GetBreedsByNameUseCase
 import com.whisker.world.domain.usecase.GetBreedsUseCase
 import dagger.Module
 import dagger.Provides
@@ -14,9 +16,10 @@ object UseCaseModule {
 
     @Provides
     fun provideGetBreedsUseCase(
-        breedRepository: BreedRepository
+        breedRepository: BreedRepository,
+        imageRepository: ImageRepository
     ): GetBreedsUseCase {
-        return GetBreedsUseCase(breedRepository)
+        return GetBreedsUseCase(breedRepository, imageRepository)
     }
 
     @Provides
@@ -24,5 +27,12 @@ object UseCaseModule {
         breedRepository: BreedRepository
     ): GetBreedByIdUseCase {
         return GetBreedByIdUseCase(breedRepository)
+    }
+
+    @Provides
+    fun provideGetBreedsByNameUseCase(
+        breedRepository: BreedRepository
+    ): GetBreedsByNameUseCase {
+        return GetBreedsByNameUseCase(breedRepository)
     }
 }

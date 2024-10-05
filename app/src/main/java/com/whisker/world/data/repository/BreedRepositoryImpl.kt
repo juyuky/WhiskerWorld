@@ -46,7 +46,12 @@ class BreedRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getBreedById(id: String): Result<Breed> {
-        val localBreeds = localDataSource.getById(id).toBreed()
+        val localBreed = localDataSource.getById(id).toBreed()
+        return Result.success(localBreed)
+    }
+
+    override suspend fun getBreedsByName(name: String): Result<List<Breed>> {
+        val localBreeds = localDataSource.getByName(name).map { it.toBreed() }
         return Result.success(localBreeds)
     }
 }

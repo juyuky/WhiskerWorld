@@ -6,5 +6,6 @@ data class Breed(
     val temperament: String,
     val origin: String,
     val description: String,
-    val imageUrl: String
+    var imageUrl: String? = null,
+    val imageId: String?
 )

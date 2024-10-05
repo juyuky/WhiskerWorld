@@ -8,4 +8,6 @@ interface BreedRepository {
 
     suspend fun getBreedById(id: String): Result<Breed>
 
+    suspend fun getBreedsByName(name: String): Result<List<Breed>>
+
 }

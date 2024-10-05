@@ -4,10 +4,12 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.whisker.world.domain.usecase.GetBreedsByNameUseCase
 import com.whisker.world.domain.usecase.GetBreedsUseCase
 import com.whisker.world.navigation.NavigationArgs
 import com.whisker.world.navigation.Routes
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getBreedsUseCase: GetBreedsUseCase
+    private val getBreedsUseCase: GetBreedsUseCase,
+    private val getBreedsByNameUseCase: GetBreedsByNameUseCase
 ) : ViewModel() {
 
     companion object {
@@ -36,12 +39,23 @@ class HomeViewModel @Inject constructor(
             }.onFailure { error ->
                 Log.e(CLASS_NAME, "Get breeds failed request error: $error")
             }
+
+        }
+    }
+
+    private fun onSearch(query: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            getBreedsByNameUseCase.execute(query).onSuccess { breeds ->
+                _state.update {
+                    it.copy(breedUiList = breeds)
+                }
+            }
         }
     }
 
     fun onEvent(event: HomeEvent, navController: NavController) {
         when (event) {
-            HomeEvent.OnNavigationBarItemClicked -> {
+            is HomeEvent.OnNavigationBarItemClicked -> {
                 // TODO :: Missing implementation
             }
 
@@ -50,6 +64,10 @@ class HomeViewModel @Inject constructor(
                     NavigationArgs.toPath(NavigationArgs.BREED_ID), event.id
                 )
                 navController.navigate(finalRoute)
+            }
+
+            is HomeEvent.OnSearch -> {
+                onSearch(event.query)
             }
         }
     }

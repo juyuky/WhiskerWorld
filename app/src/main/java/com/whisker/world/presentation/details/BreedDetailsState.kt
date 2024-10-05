@@ -9,6 +9,7 @@ data class BreedDetailsState(
         temperament = "",
         origin = "",
         description = "",
-        imageUrl = ""
+        imageUrl = "",
+        imageId = ""
     )
 )

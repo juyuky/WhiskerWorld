@@ -21,7 +21,6 @@ data class BreedDto(
             description = description,
             origin = origin,
             imageId = imageId,
-            imageUrl = ""
         )
     }
 
@@ -32,7 +31,8 @@ data class BreedDto(
             temperament = temperament,
             description = description,
             origin = origin,
-            imageUrl = ""
+            imageUrl = "",
+            imageId = imageId
         )
     }
 }

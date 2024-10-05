@@ -39,7 +39,7 @@ fun BreedItem(
             onEvent(HomeEvent.OnDetailsClicked(breed.id))
         },
         modifier = modifier
-            .padding(8.dp, 16.dp)
+            .padding(horizontal = 8.dp, vertical = 8.dp)
             .size(width = 160.dp, 180.dp)
     ) {
         Box {
@@ -90,7 +90,8 @@ fun BreedItemPreview() {
             description = "While Siamese cats are extremely fond of their people, they will follow you around and supervise your every move, being talkative and opinionated. They are a demanding and social cat, that do not like being left alone for long periods",
             imageUrl = "https://example.com/image.jpg",
             origin = "Thailand",
-            temperament = "Active, Agile, Clever, Sociable, Loving, Energetic"
+            temperament = "Active, Agile, Clever, Sociable, Loving, Energetic",
+            imageId = ""
         ),
         onEvent = {}
     )

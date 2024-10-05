@@ -4,11 +4,11 @@ import com.whisker.world.domain.model.Breed
 import com.whisker.world.domain.repository.BreedRepository
 import javax.inject.Inject
 
-class GetBreedByIdUseCase @Inject constructor(
+class GetBreedsByNameUseCase @Inject constructor(
     private val breedRepository: BreedRepository
 ) {
 
-    suspend fun execute(id: String): Result<Breed> {
-        return breedRepository.getBreedById(id)
+    suspend fun execute(name: String): Result<List<Breed>> {
+        return breedRepository.getBreedsByName(name)
     }
 }

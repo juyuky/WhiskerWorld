@@ -115,7 +115,8 @@ fun HomeScreenPreview() {
                             "being left alone for long periods",
                     imageUrl = "https://example.com/image.jpg",
                     origin = "Thailand",
-                    temperament = "Active, Agile, Clever, Sociable, Loving, Energetic"
+                    temperament = "Active, Agile, Clever, Sociable, Loving, Energetic",
+                    imageId = ""
                 )
             ),
             onEvent = {}

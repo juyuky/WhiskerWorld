@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.whisker.world.data.local.BreedDao
 import com.whisker.world.data.local.BreedDatabase
+import com.whisker.world.data.local.ImageDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,5 +38,10 @@ object AppModule {
     @Provides
     fun provideBreadDAO(appDatabase: BreedDatabase): BreedDao {
         return appDatabase.breedDao
+    }
+
+    @Provides
+    fun provideImageDAO(appDatabase: BreedDatabase): ImageDao {
+        return appDatabase.imageDao
     }
 }

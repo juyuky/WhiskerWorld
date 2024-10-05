@@ -15,12 +15,12 @@ import coil.request.ImageRequest
 
 @Composable
 fun CustomSubcomposeAsyncImage(
-    url: String = "",
+    url: String? = "",
     size: Int
 ) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(url)
+            .data(url ?: "")
             .crossfade(true)
             .build(),
         loading = {

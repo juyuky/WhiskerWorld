@@ -1,7 +1,6 @@
 package com.whisker.world.presentation.details
 
 import androidx.lifecycle.ViewModel
-import com.whisker.world.domain.model.Breed
 import com.whisker.world.domain.usecase.GetBreedByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
