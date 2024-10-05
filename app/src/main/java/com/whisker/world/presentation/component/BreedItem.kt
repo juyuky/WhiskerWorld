@@ -24,19 +24,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.whisker.world.R
-import com.whisker.world.presentation.BreedUi
+import com.whisker.world.domain.model.Breed
 import com.whisker.world.presentation.home.HomeEvent
 
 @Composable
 fun BreedItem(
-    breedUi: BreedUi,
+    breed: Breed,
     onEvent: (HomeEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),
         onClick = {
-            onEvent(HomeEvent.OnDetailsClicked(breedUi.id))
+            onEvent(HomeEvent.OnDetailsClicked(breed.id))
         },
         modifier = modifier
             .padding(8.dp, 16.dp)
@@ -44,14 +44,14 @@ fun BreedItem(
     ) {
         Box {
             IconToggleButton(
-                checked = breedUi.isFavorite,
+                checked = false/* breed.isFavorite*/,
                 onCheckedChange = {
-                    breedUi.isFavorite = !breedUi.isFavorite
+                    //breed.isFavorite = !breed.isFavorite
                 },
                 modifier = modifier.align(Alignment.TopEnd)
             ) {
                 Icon(
-                    imageVector = if (breedUi.isFavorite) {
+                    imageVector = if (false) { //if (breed.isFavorite) {
                         Icons.Filled.Star
                     } else {
                         Icons.Default.Star
@@ -65,10 +65,10 @@ fun BreedItem(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = modifier.height(32.dp))
-                CustomSubcomposeAsyncImage(breedUi.imageUrl, 85)
+                CustomSubcomposeAsyncImage(breed.imageUrl, 85)
                 Spacer(modifier = modifier.height(12.dp))
                 Text(
-                    text = breedUi.name,
+                    text = breed.name,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -84,14 +84,13 @@ fun BreedItem(
 @Composable
 fun BreedItemPreview() {
     BreedItem(
-        breedUi = BreedUi(
+        breed = Breed(
             id = "123",
             name = "Siamese",
             description = "While Siamese cats are extremely fond of their people, they will follow you around and supervise your every move, being talkative and opinionated. They are a demanding and social cat, that do not like being left alone for long periods",
             imageUrl = "https://example.com/image.jpg",
             origin = "Thailand",
-            temperament = "Active, Agile, Clever, Sociable, Loving, Energetic",
-            isFavorite = false
+            temperament = "Active, Agile, Clever, Sociable, Loving, Energetic"
         ),
         onEvent = {}
     )

@@ -1,13 +1,7 @@
 package com.whisker.world.presentation.home
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -49,8 +43,8 @@ fun HomeScreen(
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(120.dp),
                     content = {
-                        items(state.breedUiList) { breedUi ->
-                            BreedItem(breedUi, onEvent)
+                        items(state.breedUiList) { breed ->
+                            BreedItem(breed, onEvent)
                         }
                     },
                     modifier = Modifier.padding(innerPadding)

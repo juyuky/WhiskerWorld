@@ -80,10 +80,19 @@ dependencies {
     // Coil
     implementation(libs.coil.compose)
 
+    // Room
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+    testImplementation(libs.mockito.kotlin)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)

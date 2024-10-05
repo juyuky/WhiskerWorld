@@ -21,14 +21,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.whisker.world.R
-import com.whisker.world.presentation.BreedUi
+import com.whisker.world.domain.model.Breed
 import com.whisker.world.presentation.component.CustomSubcomposeAsyncImage
 import com.whisker.world.presentation.component.CustomTopBar
 import com.whisker.world.presentation.ui.theme.WhiskerWorldTheme
 
 @Composable
 fun BreedDetailsScreen(
-    breedUi: BreedUi,
+    state: BreedDetailsState,
     onEvent: (BreedDetailsEvent) -> Unit
 ) {
     Surface(
@@ -47,10 +47,10 @@ fun BreedDetailsScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Spacer(modifier = Modifier.height(16.dp))
-                    CustomSubcomposeAsyncImage(breedUi.imageUrl, 120)
+                    CustomSubcomposeAsyncImage(state.breed.imageUrl, 120)
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = breedUi.name,
+                        text = state.breed.name,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -59,7 +59,7 @@ fun BreedDetailsScreen(
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        text = breedUi.description,
+                        text = state.breed.description,
                         textAlign = TextAlign.Justify,
                         modifier = Modifier.padding(horizontal = 20.dp)
                     )
@@ -74,7 +74,7 @@ fun BreedDetailsScreen(
                             modifier = Modifier.padding(start = 10.dp, top = 10.dp)
                         )
                         Text(
-                            text = breedUi.origin,
+                            text = state.breed.origin,
                             modifier = Modifier.padding(10.dp)
                         )
                     }
@@ -90,7 +90,7 @@ fun BreedDetailsScreen(
                             modifier = Modifier.padding(start = 10.dp, top = 10.dp)
                         )
                         Text(
-                            text = breedUi.temperament,
+                            text = state.breed.temperament,
                             modifier = Modifier.padding(10.dp)
                         )
                     }
@@ -105,17 +105,18 @@ fun BreedDetailsScreen(
 fun HomeScreenPreview() {
     WhiskerWorldTheme {
         BreedDetailsScreen(
-            breedUi = BreedUi(
-                id = "123",
-                name = "Siamese",
-                description = "While Siamese cats are extremely fond of their people, they " +
-                        "will follow you around and supervise your every move, being talkative " +
-                        "and opinionated. They are a demanding and social cat, that do not like " +
-                        "being left alone for long periods",
-                imageUrl = "https://example.com/image.jpg",
-                origin = "Thailand",
-                temperament = "Active, Agile, Clever, Sociable, Loving, Energetic",
-                isFavorite = false
+            state = BreedDetailsState(
+                breed = Breed(
+                    id = "123",
+                    name = "Siamese",
+                    description = "While Siamese cats are extremely fond of their people, they " +
+                            "will follow you around and supervise your every move, being talkative " +
+                            "and opinionated. They are a demanding and social cat, that do not like " +
+                            "being left alone for long periods",
+                    imageUrl = "https://example.com/image.jpg",
+                    origin = "Thailand",
+                    temperament = "Active, Agile, Clever, Sociable, Loving, Energetic"
+                )
             ),
             onEvent = {}
         )

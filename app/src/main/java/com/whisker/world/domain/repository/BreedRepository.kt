@@ -1,11 +1,11 @@
 package com.whisker.world.domain.repository
 
-import com.whisker.world.data.model.Breed
+import com.whisker.world.domain.model.Breed
 
 interface BreedRepository {
 
-    fun getAllBreeds(): Result<List<Breed>>
+    suspend fun getAllBreeds(): Result<List<Breed>>
 
-    fun getBreedByImageId(imageId: String): Result<Breed>
+    suspend fun getBreedById(id: String): Result<Breed>
 
 }
