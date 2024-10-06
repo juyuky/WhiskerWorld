@@ -13,6 +13,10 @@ class ImageRepositoryImpl @Inject constructor(
     private val localDataSource: ImageDao
 ) : ImageRepository {
 
+    companion object {
+        const val CLASS_NAME = "ImageRepository"
+    }
+
     override suspend fun getAllImages(imagesIds: List<String>): Result<List<ImageEntity>> {
         val localImages = localDataSource.getAll()
 
@@ -27,25 +31,24 @@ class ImageRepositoryImpl @Inject constructor(
                             entitiesList.add(it.toImageEntity())
                         }
                     } else {
-                        Log.e("ImageRepository", "Failed to get image with id $imageId")
+                        Log.e(CLASS_NAME, "Failed to get image with id $imageId")
                         return Result.failure(IOException())
                     }
                 }
 
                 // Insert all data on table
                 localDataSource.insert(entitiesList)
-                return Result.success(localImages)
+                return Result.success(entitiesList)
 
             } catch (ex: Exception) {
-                Log.e("ImageRepository", "Failed to perform the request")
+                Log.e(CLASS_NAME, "Failed to perform the request")
                 return Result.failure(ex)
 
             }
         } else {
             // Local Data is Available
-            Log.e("ImageRepository", "Local Data is available")
+            Log.i(CLASS_NAME, "Local Data is available")
             return Result.success(localImages)
         }
     }
-
 }

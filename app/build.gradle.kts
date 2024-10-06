@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
-    // TODO
     id("kotlin-kapt")
 }
 
@@ -86,7 +85,7 @@ dependencies {
     // Room
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
-    implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.room.ktx)
 
     // AndroidX
     implementation(libs.androidx.core.ktx)
@@ -95,6 +94,7 @@ dependencies {
     // Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockito.kotlin)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

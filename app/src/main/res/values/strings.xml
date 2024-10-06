@@ -19,5 +19,8 @@
 
     <!-- Favourite Screen -->
     <string name="favourites_screen_top_bar_title">Favourites</string>
+    <string name="favourites_screen_empty_title">Empty list</string>
+    <string name="favourites_screen_empty_description">You have no favourites at this moment.</string>
+
 
 </resources>

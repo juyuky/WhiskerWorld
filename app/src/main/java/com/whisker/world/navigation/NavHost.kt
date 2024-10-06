@@ -36,7 +36,6 @@ fun NavHost(
         composable(Navigation.Details.destination) { backStackEntry ->
             val viewModel: BreedDetailsViewModel = hiltViewModel()
             val breedId = backStackEntry.arguments?.getString(NavigationArgs.BREED_ID)
-            // TODO: LAST: REVIEW THIS
             viewModel.getBreedById(breedId)
             BreedDetailsScreen(
                 state = viewModel.state.collectAsState().value,

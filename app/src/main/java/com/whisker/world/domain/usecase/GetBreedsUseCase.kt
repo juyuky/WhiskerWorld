@@ -1,5 +1,6 @@
 package com.whisker.world.domain.usecase
 
+import android.util.Log
 import com.whisker.world.domain.model.Breed
 import com.whisker.world.domain.repository.BreedRepository
 import com.whisker.world.domain.repository.ImageRepository
@@ -14,21 +15,29 @@ class GetBreedsUseCase @Inject constructor(
 
     suspend fun execute(): Result<List<Breed>> =
         withContext(IO) {
-            breedRepository.getAllBreeds().onSuccess { breeds ->
+            breedRepository.getAllBreeds().mapCatching { breeds ->
                 val imageIds: List<String> = breeds.mapNotNull { it.imageId }
-                fillImageId(imageIds, breeds)
-            }
-        }
+                val breedMap = breeds.associateBy { it.imageId }
 
-    private suspend fun fillImageId(imageIds: List<String>, breeds: List<Breed>) {
-        val newBreedsList = mutableListOf<Breed>()
-        imageRepository.getAllImages(imageIds).onSuccess { imageEntities ->
-            imageEntities.forEach { entity ->
-                val breed = breeds.first { it.imageId == entity.id }
-                breed.imageUrl = entity.url
-                newBreedsList.add(breed)
+                imageRepository.getAllImages(imageIds).onSuccess { imageEntities ->
+                    val breedsWithUrl = imageEntities.mapNotNull { entity ->
+                        breedMap[entity.id]?.copy(imageUrl = entity.url)
+                    }
+
+                    val breedsToUpdate = breedsWithUrl.filter { updatedBreed ->
+                        val originalBreed = breedMap[updatedBreed.imageId]
+                        originalBreed == null || originalBreed.imageUrl != updatedBreed.imageUrl
+                    }
+
+                    if (breedsToUpdate.isNotEmpty()) {
+                        breedRepository.updateBreeds(breedsToUpdate)
+                    }
+                    return@withContext Result.success(breedsWithUrl)
+                }.onFailure { error ->
+                    Log.e("GetBreedsUseCase", "Error fetching images: $error")
+                    return@withContext Result.failure(error)
+                }
             }
+            Result.success(emptyList())
         }
-        breedRepository.updateBreeds(breeds)
-    }
 }

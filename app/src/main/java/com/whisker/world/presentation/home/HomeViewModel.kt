@@ -35,16 +35,19 @@ class HomeViewModel @Inject constructor(
     val state get() = _state.asStateFlow()
 
     init {
+        updateLoadingState(true)
         viewModelScope.launch {
             getBreedsUseCase.execute().onSuccess { breeds ->
                 _state.update {
-                    it.copy(breedUiList = breeds)
+                    it.copy(
+                        breedUiList = breeds,
+                        isLoading = false
+                    )
                 }
             }.onFailure { error ->
                 Log.e(CLASS_NAME, "Get breeds failed request error: $error")
-                _state.update {
-                    it.copy(showError = true)
-                }
+                updateLoadingState(false)
+                updateErrorState(true)
             }
         }
     }
@@ -84,13 +87,27 @@ class HomeViewModel @Inject constructor(
 
     private fun updateFavouriteValue(breed: Breed) {
         viewModelScope.launch {
-            updateBreedUseCase.execute(breed).onSuccess { breeds ->
-                _state.update {
-                    it.copy(breedUiList = breeds)
+            updateBreedUseCase.execute(breed)
+                .onSuccess { breeds ->
+                    _state.update {
+                        it.copy(breedUiList = breeds)
+                    }
                 }
-            }.onFailure {
-                // TODO :: LAST ERROR MESSAGE
-            }
+                .onFailure { error ->
+                    Log.e(CLASS_NAME, "Failed update favourite: $error")
+                }
+        }
+    }
+
+    private fun updateLoadingState(isLoading: Boolean) {
+        _state.update {
+            it.copy(isLoading = isLoading)
+        }
+    }
+
+    private fun updateErrorState(showError: Boolean) {
+        _state.update {
+            it.copy(showError = showError)
         }
     }
 }

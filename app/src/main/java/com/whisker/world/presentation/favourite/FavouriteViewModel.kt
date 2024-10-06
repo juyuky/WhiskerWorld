@@ -23,6 +23,10 @@ class FavouriteViewModel @Inject constructor(
     private val updateBreedUseCase: UpdateBreedUseCase
 ) : ViewModel() {
 
+    companion object {
+        private const val CLASS_NAME = "FavouriteViewModel"
+    }
+
     private val _state = MutableStateFlow(FavouriteState())
     val state get() = _state.asStateFlow()
 
@@ -59,13 +63,15 @@ class FavouriteViewModel @Inject constructor(
 
     private fun updateFavouriteValue(breed: Breed) {
         viewModelScope.launch {
-            updateBreedUseCase.execute(breed).onSuccess { breeds ->
-                _state.update {
-                    it.copy(favouritesBreedList = breeds)
+            updateBreedUseCase.execute(breed)
+                .onSuccess { breeds ->
+                    _state.update { state ->
+                        state.copy(favouritesBreedList = breeds.filter { it.isFavourite })
+                    }
                 }
-            }.onFailure {
-                // TODO :: LAST ERROR MESSAGE
-            }
+                .onFailure { error ->
+                    Log.e(CLASS_NAME, "Failed update favourite: $error")
+                }
         }
     }
 }

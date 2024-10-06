@@ -13,5 +13,4 @@ class UpdateBreedUseCase @Inject constructor(
         withContext(IO) {
             breedRepository.updateBreeds(listOf(breed))
         }
-
 }

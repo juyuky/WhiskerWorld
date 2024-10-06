@@ -3,9 +3,11 @@ package com.whisker.world.data
 import com.whisker.world.data.local.BreedDao
 import com.whisker.world.data.local.entity.BreedEntity
 import com.whisker.world.data.remote.BreedApi
+import com.whisker.world.data.remote.dto.BreedDto
 import com.whisker.world.data.repository.BreedRepositoryImpl
+import com.whisker.world.domain.model.Breed
 import com.whisker.world.domain.repository.BreedRepository
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -13,7 +15,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import retrofit2.Call
+import retrofit2.Response
+import java.io.IOException
+
 
 @RunWith(MockitoJUnitRunner::class)
 class BreedRepositoryTest {
@@ -34,7 +42,7 @@ class BreedRepositoryTest {
 
     @Test
     fun getAllBreeds_available_in_local_storage_success() {
-        runBlocking {
+        runTest {
             val breedEntities = listOf(getFakeBreedEntity())
             val breeds = breedEntities.map { it.toBreed() }
 
@@ -47,8 +55,43 @@ class BreedRepositoryTest {
     }
 
     @Test
+    fun getAllBreeds_remote_success() {
+        runTest {
+            val breedsDto = listOf(getFakeBreedDto())
+            val response = Response.success(breedsDto)
+            val breeds = breedsDto.map { it.toBreed() }
+            val mockCall: Call<List<BreedDto>> = mock()
+
+            whenever(breedDao.getAll()).thenReturn(emptyList())
+            whenever(breedApi.getAll()).thenReturn(mockCall)
+            whenever(breedApi.getAll().execute()).thenReturn(response)
+
+            val result = breedRepository.getAllBreeds()
+
+            assertTrue(result.isSuccess)
+            assertEquals(breeds, result.getOrNull())
+            verify(breedDao).getAll()
+        }
+    }
+
+    @Test
+    fun getAllBreeds_remote_not_success() {
+        runTest {
+            val mockCall: Call<List<BreedDto>> = mock()
+
+            whenever(breedDao.getAll()).thenReturn(emptyList())
+            whenever(breedApi.getAll()).thenReturn(mockCall)
+            whenever(breedApi.getAll().execute()).thenThrow(IOException::class.java)
+
+            val result = breedRepository.getAllBreeds()
+
+            assertTrue(result.isFailure)
+        }
+    }
+
+    @Test
     fun getBreedById_success() {
-        runBlocking {
+        runTest {
             val id = "id"
             val breedEntity = getFakeBreedEntity()
             val breed = breedEntity.toBreed()
@@ -63,7 +106,7 @@ class BreedRepositoryTest {
 
     @Test
     fun getBreedById_error() {
-        runBlocking {
+        runTest {
             val id = "otherId"
 
             whenever(breedDao.getById(id)).thenReturn(null)
@@ -75,7 +118,7 @@ class BreedRepositoryTest {
 
     @Test
     fun getBreedsByName_success() {
-        runBlocking {
+        runTest {
             val name = "name"
             val breedEntities = listOf(getFakeBreedEntity())
             val breeds = breedEntities.map { it.toBreed() }
@@ -89,20 +132,21 @@ class BreedRepositoryTest {
     }
 
     @Test
-    fun getBreedsByName_error() {
-        runBlocking {
+    fun getBreedsByName_empty() {
+        runTest {
             val name = "otherName"
 
             whenever(breedDao.getByName(name)).thenReturn(emptyList())
 
             val result = breedRepository.getBreedsByName(name)
-            assertTrue(result.isFailure)
+            assertTrue(result.isSuccess)
+            assertEquals(emptyList<Breed>(), result.getOrNull())
         }
     }
 
     @Test
     fun getFavouriteBreeds_success() {
-        runBlocking {
+        runTest {
             val isFavourites = true
             val breedEntities = listOf(getFakeBreedEntity())
             val breeds = breedEntities.map { it.toBreed() }
@@ -117,7 +161,7 @@ class BreedRepositoryTest {
 
     @Test
     fun getFavouriteBreed_error() {
-        runBlocking {
+        runTest {
             whenever(breedDao.getByFavourite(true)).thenReturn(emptyList())
 
             val result = breedRepository.getFavouriteBreeds()
@@ -127,7 +171,7 @@ class BreedRepositoryTest {
 
     @Test
     fun updateBreeds_success() {
-        runBlocking {
+        runTest {
             val breedEntities = listOf(getFakeBreedEntity())
             val breeds = breedEntities.map { it.toBreed() }
 
@@ -140,7 +184,7 @@ class BreedRepositoryTest {
 
     @Test
     fun updateBreeds_error() {
-        runBlocking {
+        runTest {
             whenever(breedDao.getAll()).thenReturn(emptyList())
 
             val result = breedRepository.updateBreeds(emptyList())
@@ -156,5 +200,14 @@ class BreedRepositoryTest {
         origin = "origin",
         imageId = "imageId",
         isFavourite = true
+    )
+
+    private fun getFakeBreedDto() = BreedDto(
+        id = "id",
+        name = "name",
+        temperament = "temperament",
+        description = "description",
+        origin = "origin",
+        imageId = "imageId"
     )
 }

@@ -10,8 +10,9 @@ class GetBreedByIdUseCase @Inject constructor(
     private val breedRepository: BreedRepository
 ) {
 
-    suspend fun execute(id: String): Result<Breed> = withContext(IO) {
-        breedRepository.getBreedById(id)
-    }
+    suspend fun execute(id: String): Result<Breed> =
+        withContext(IO) {
+            breedRepository.getBreedById(id)
+        }
 
 }

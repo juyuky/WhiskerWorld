@@ -61,9 +61,8 @@ class BreedRepositoryImpl @Inject constructor(
         return if (localBreedEntities.isNotEmpty()) {
             Result.success(localBreedEntities.map { it.toBreed() })
         } else {
-            // TODO LAST CHECK IF SHOULD RETURN FAILURE
             Log.i(CLASS_NAME, "Failed to get breed by name: $name")
-            Result.failure(IOException())
+            Result.success(emptyList())
         }
     }
 

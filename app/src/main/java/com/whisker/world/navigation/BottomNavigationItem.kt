@@ -1,10 +1,10 @@
 package com.whisker.world.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Menu
-import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -29,8 +29,8 @@ fun getBottomNavigationItems() =
         ),
         BottomNavigationItem(
             title = stringResource(R.string.bottom_navigation_favourites),
-            selectedIcon = Icons.Filled.Star,
-            unselectedIcon = Icons.Outlined.Star,
+            selectedIcon = Icons.Filled.Favorite,
+            unselectedIcon = Icons.Outlined.Favorite,
             route = Routes.FAVOURITES
         )
     )

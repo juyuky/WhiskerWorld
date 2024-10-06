@@ -1,6 +1,7 @@
 package com.whisker.world.presentation.details
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.whisker.world.R
 import com.whisker.world.domain.model.Breed
+import com.whisker.world.presentation.component.CustomIconButton
 import com.whisker.world.presentation.component.CustomSubcomposeAsyncImage
 import com.whisker.world.presentation.component.CustomTopBar
 import com.whisker.world.presentation.ui.theme.WhiskerWorldTheme
@@ -49,14 +51,20 @@ fun BreedDetailsScreen(
                     Spacer(modifier = Modifier.height(16.dp))
                     CustomSubcomposeAsyncImage(state.breed.imageUrl, 120)
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = state.breed.name,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(horizontal = 20.dp)
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = state.breed.name,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(horizontal = 20.dp)
+                        )
+                        CustomIconButton(
+                            state.breed,
+                            onFavouriteChanged = { onEvent(BreedDetailsEvent.OnFavouriteClicked) }
+                        )
+                    }
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = state.breed.description,
@@ -78,7 +86,6 @@ fun BreedDetailsScreen(
                             modifier = Modifier.padding(10.dp)
                         )
                     }
-
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
