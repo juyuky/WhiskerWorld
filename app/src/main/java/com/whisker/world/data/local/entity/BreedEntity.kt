@@ -12,7 +12,9 @@ data class BreedEntity(
     val temperament: String,
     val description: String,
     val origin: String,
-    val imageId: String?
+    val imageId: String?,
+    var imageUrl: String? = null,
+    var isFavourite: Boolean = false
 ) {
     fun toBreed(): Breed {
         return Breed(
@@ -21,8 +23,9 @@ data class BreedEntity(
             temperament = temperament,
             origin = origin,
             description = description,
-            imageUrl = "",
-            imageId = imageId
+            imageId = imageId,
+            imageUrl = imageUrl,
+            isFavourite = isFavourite
         )
     }
 }

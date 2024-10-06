@@ -2,16 +2,22 @@
 
     <string name="app_name">WhiskerWorld</string>
 
-    <!--Home Screen-->
+    <!-- Home Screen -->
     <string name="bottom_navigation_list">Cats List</string>
     <string name="bottom_navigation_favourites">Favourites</string>
-    <string name="breed_item_favourites_content_description">Add to Favourites</string>
+    <string name="breed_item_favourites_add_content_description">Add to Favourites</string>
+    <string name="breed_item_favourites_remove_content_description">Remove from Favourite</string>
     <string name="home_screen_top_bar_title">Cats</string>
     <string name="home_screen_search_placeholder">Search...</string>
+    <string name="home_screen_error_title">No Connection</string>
+    <string name="home_screen_error_description">Error retrieving information.</string>
 
-    <!--Details Screen-->
+    <!-- Details Screen -->
     <string name="details_screen_top_bar_title">Cat Details</string>
     <string name="details_screen_origin_title">Origin</string>
     <string name="details_screen_temperament_title">Temperament</string>
+
+    <!-- Favourite Screen -->
+    <string name="favourites_screen_top_bar_title">Favourites</string>
 
 </resources>

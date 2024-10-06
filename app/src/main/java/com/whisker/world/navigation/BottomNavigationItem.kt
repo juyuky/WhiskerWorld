@@ -13,7 +13,8 @@ import com.whisker.world.R
 data class BottomNavigationItem(
     val title: String,
     val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector
+    val unselectedIcon: ImageVector,
+    val route: String
 )
 
 @Composable
@@ -22,12 +23,14 @@ fun getBottomNavigationItems() =
         BottomNavigationItem(
             title = stringResource(R.string.bottom_navigation_list),
             selectedIcon = Icons.Filled.Menu,
-            unselectedIcon = Icons.Outlined.Menu
+            unselectedIcon = Icons.Outlined.Menu,
+            route = Routes.HOME
 
         ),
         BottomNavigationItem(
             title = stringResource(R.string.bottom_navigation_favourites),
             selectedIcon = Icons.Filled.Star,
-            unselectedIcon = Icons.Outlined.Star
+            unselectedIcon = Icons.Outlined.Star,
+            route = Routes.FAVOURITES
         )
     )

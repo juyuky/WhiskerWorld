@@ -6,12 +6,12 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetBreedByIdUseCase @Inject constructor(
+class UpdateBreedUseCase @Inject constructor(
     private val breedRepository: BreedRepository
 ) {
-
-    suspend fun execute(id: String): Result<Breed> = withContext(IO) {
-        breedRepository.getBreedById(id)
-    }
+    suspend fun execute(breed: Breed) =
+        withContext(IO) {
+            breedRepository.updateBreeds(listOf(breed))
+        }
 
 }

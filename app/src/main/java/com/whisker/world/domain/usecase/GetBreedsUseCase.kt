@@ -21,11 +21,14 @@ class GetBreedsUseCase @Inject constructor(
         }
 
     private suspend fun fillImageId(imageIds: List<String>, breeds: List<Breed>) {
+        val newBreedsList = mutableListOf<Breed>()
         imageRepository.getAllImages(imageIds).onSuccess { imageEntities ->
             imageEntities.forEach { entity ->
-                breeds.first { it.imageId == entity.id }.imageUrl = entity.url
+                val breed = breeds.first { it.imageId == entity.id }
+                breed.imageUrl = entity.url
+                newBreedsList.add(breed)
             }
         }
+        breedRepository.updateBreeds(breeds)
     }
-
 }

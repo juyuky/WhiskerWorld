@@ -10,4 +10,7 @@ interface BreedRepository {
 
     suspend fun getBreedsByName(name: String): Result<List<Breed>>
 
+    suspend fun getFavouriteBreeds(): Result<List<Breed>>
+
+    suspend fun updateBreeds(breeds: List<Breed>): Result<List<Breed>>
 }

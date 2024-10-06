@@ -17,10 +17,13 @@ interface BreedDao {
     suspend fun getAll(): List<BreedEntity>
 
     @Query("SELECT * FROM breedentity WHERE id = :id")
-    suspend fun getById(id: String): BreedEntity
+    suspend fun getById(id: String): BreedEntity?
 
     @Query("SELECT * FROM breedentity WHERE name LIKE '%' || :name || '%'")
     suspend fun getByName(name: String): List<BreedEntity>
+
+    @Query("SELECT * FROM breedentity WHERE isFavourite = :isFavourite")
+    suspend fun getByFavourite(isFavourite: Boolean): List<BreedEntity>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(breeds: List<BreedEntity>)

@@ -27,7 +27,7 @@ fun CustomSubcomposeAsyncImage(
             CircularProgressIndicator(color = Color.LightGray)
         },
         contentDescription = null,
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.FillBounds,
         modifier = Modifier
             .size(size.dp)
             .clip(CircleShape)

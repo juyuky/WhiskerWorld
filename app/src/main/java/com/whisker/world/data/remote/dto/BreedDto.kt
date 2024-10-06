@@ -20,7 +20,7 @@ data class BreedDto(
             temperament = temperament,
             description = description,
             origin = origin,
-            imageId = imageId,
+            imageId = imageId
         )
     }
 

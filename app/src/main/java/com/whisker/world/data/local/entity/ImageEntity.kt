@@ -8,5 +8,4 @@ data class ImageEntity(
     @PrimaryKey
     val id: String,
     val url: String?
-) {
-}
+)
